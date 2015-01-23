@@ -21,7 +21,11 @@ namespace DataGatheringApplication
         public static void Main(string[] args)
         {
             // See readme.md for remarks. 
-
+            // Sorry for the mess, thank you for the interest!
+            // Lots of weird names and unnecessary constructs here
+            // but it works... Some comments might be outdated or 
+            // actually be applicable to other parts of the code.
+           
             _keyManager = new KeyManager();
 
             //GetOrganizationCollectionItems();
@@ -43,8 +47,6 @@ namespace DataGatheringApplication
         {
             // On writing, .csv will automatically be appended.
 
-            #region write to local file
-
             // By manual lookup the limit of 1000 items has been found. 
             // In reality, at the time of writing it will be about 807.
             var items = new List<OrganizationCollectionItem>(1000);
@@ -60,21 +62,12 @@ namespace DataGatheringApplication
             //write the whole result to a csv file
             items.ToCsv(DataLocation + OrganizationCollectionFilename);
 
-            #endregion
-
-            /*var test = CsvFile.Read<OrganizationCollectionItem>(DataLocation + filename + ".csv");
-            foreach (var item in test)
-            {
-                Console.WriteLine(item.UrlName);
-            }*/
             Console.ReadLine();
         }
 
         public static void GetPortfolioProjectItems()
         {
             var items = new List<PortfolioProjectsItem>(2500);
-
-            #region write to local file
 
             // get the organizations. 
             var organizations =
@@ -97,7 +90,6 @@ namespace DataGatheringApplication
 
             items.ToCsv(DataLocation + PortfolioProjectsFilename);
 
-            #endregion
         }
 
         public static void GetProjectCollectionItems()
@@ -114,7 +106,7 @@ namespace DataGatheringApplication
 
             var projects = CsvFile.Read<PortfolioProjectsItem>(DataLocation + PortfolioProjectsFilename + ".csv");
             // As we're dealing with API limit, we select a subset of the whole collection.
-            // As our daily limit is 4000, and we need several runs for other calls as well, we
+            // As our daily limit is 1000, and we need several runs for other calls as well, we
             // do 800
             const int subsetCount = 800;
             var rnd = new Random();
@@ -243,7 +235,6 @@ namespace DataGatheringApplication
                 }
             }
 
-
             // then load the file which holds the basic project information for
             // non-portfolio projects
             var lonerProjects = CsvFile.Read<LonerProject>(DataLocation + LonerProjectsFilename + ".csv");
@@ -276,7 +267,6 @@ namespace DataGatheringApplication
                     Console.WriteLine("Source was empty");
                 }
             }
-
 
             // Write results to file       
             items.ToCsv(DataLocation + ActivityFactsFilename);
